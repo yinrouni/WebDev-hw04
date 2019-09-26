@@ -48,16 +48,17 @@ class Board extends React.Component{
 	  if (!this.state.clickDisabled){
 	  var presentD = this.state.present.slice();
 	  var clicksD = this.state.clicks;
+	// click the forst tile.
 	  if (this.state.first == null){
 	 	 presentD[i]=this.state.letters[i];
 	  	this.setState({present: presentD, clicks: clicksD+1, first: i});
 	  }
-
+	// the two tiles match, the values won't be hidden(marked completed). The onclick event will be disabled.
 	  else if (this.state.letters[i]==this.state.letters[this.state.first]){
 	  	presentD[i] = this.state.letters[i];
 		  this.setState({present: presentD, clicks: clicksD+1, first: null});
 	  }
-
+	// the two don't match, they will be hidden in 1 second. During the time interval, ignore all the clicks.
 	  else {
 		  presentD[i]=this.state.letters[i];
 		  this.setState({present: presentD, clickDisabled: true});
@@ -72,6 +73,8 @@ class Board extends React.Component{
 	  }
   }
   }
+
+// Generated a random letter list for the game.
 swap(ls){
  var ret = [];
 	while(ls.length> 0){
@@ -95,6 +98,7 @@ swap(ls){
   renderSquare(i) {
 	  if (this.state.present[i]==null){
     		return <Square value={i} key={32+i} letter={this.state.letters[i]} hidden={true} onClick={()=>this.handleClick(i)}/>;}
+	  // present[i]== null means the tile is completed.
 	  else {
 	  	return <Square value={i} key={32+i} letter={this.state.letters[i]} hidden={false} onClick={()=>{return;}}/>;
 		 
